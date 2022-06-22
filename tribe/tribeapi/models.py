@@ -16,8 +16,16 @@ class Person(models.Model):
 
 class Hobby(models.Model):
     name = models.CharField(max_length=60)
-
-    pid = models.ForeignKey(Person, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.name
+
+
+class PersonHobby(models.Model):
+    """
+    Showing the Many to Many relationship between hobby and Person
+    """
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='hobbies')
+    hobby = models.ForeignKey(Hobby, on_delete=models.CASCADE, related_name="persons")
+
+    def __str__(self):
+        return self.person + ', ' + self.hobby
