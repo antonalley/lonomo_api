@@ -10,6 +10,10 @@ class Person(models.Model):
     major = models.CharField(max_length=60)
     religion = models.CharField(max_length=60)
 
+    @property
+    def fullName(self):
+        return self.firstName + " " + self.lastName
+
     def __str__(self):
         return self.firstName
 
