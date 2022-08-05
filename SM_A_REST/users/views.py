@@ -15,12 +15,10 @@ def login_api(request):
     _, token = AuthToken.objects.create(user)
 
     return Response({
-        'user_info': {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email
-        },
-        'token': token
+        'personID': user.id,
+        'username': user.username,
+        'authtoken': token,
+        'success': True,
     })
 
 
