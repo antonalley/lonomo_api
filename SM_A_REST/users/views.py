@@ -1,9 +1,12 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from knox.auth import AuthToken
 
-from .serializers import RegisterSerializer
+from .models import Interest, PersonInterest
+from .serializers import RegisterSerializer, InterestSerializer, PersonInterestSerializer
 
 
 @api_view(['POST'])
@@ -49,10 +52,19 @@ def register_api(request):
     _, token = AuthToken.objects.create(user)
 
     return Response({
-        'user_info': {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email
-        },
-        'token': token
+        'personID': user.id,
+        'username': user.username,
+        'authtoken': token,
+        'success': True,
     })
+
+
+class InterestViewSet(viewsets.ModelViewSet):
+    queryset = Interest.objects.filter(required=True)
+    serializer_class = InterestSerializer
+
+class PersonInterestViewSet(viewsets.ModelViewSet):
+    queryset = PersonInterest.objects.all()
+    serializer_class = PersonInterestSerializer
+
+

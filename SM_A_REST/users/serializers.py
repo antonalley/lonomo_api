@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers, validators
 
+from .models import Interest, PersonInterest
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,3 +42,15 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name=first_name,
             last_name=last_name,
         )
+
+        return user
+
+class InterestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interest
+        fields = ("id", "name", "open_response")
+
+class PersonInterestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PersonInterest
+        fields = ("interest", "person", "detail")
