@@ -1,5 +1,5 @@
 """
-ASGI config for tribe project.
+ASGI config for SM_A_REST project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tribe.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SM_A_REST.settings')
 
 application = get_asgi_application()

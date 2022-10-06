@@ -1,5 +1,5 @@
 """
-WSGI config for tribe project.
+WSGI config for SM_A_REST project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tribe.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SM_A_REST.settings')
 
 application = get_wsgi_application()

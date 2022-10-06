@@ -5,4 +5,7 @@
     <orderEntry type="jdk" jdkName="Python 3.9 (tribe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="C:\Users\Anton\OneDrive - BYU\Documents\..Programming\Python3-Projects\Web Development\Developing\tribe\requirements.txt" />
+  </component>
 </module>
