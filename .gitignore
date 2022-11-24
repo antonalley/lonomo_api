@@ -1,0 +1,5 @@
+lonomo_env
+*.sqlite3
+__pycache__/
+migrations/
+.vscode/
