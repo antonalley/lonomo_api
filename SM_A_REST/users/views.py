@@ -4,7 +4,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from knox.auth import AuthToken
-
+from django.contrib.auth.models import User
 from .models import Interest, PersonInterest
 from .serializers import RegisterSerializer, InterestSerializer, PersonInterestSerializer
 
@@ -28,15 +28,29 @@ def login_api(request):
 @api_view(['GET'])
 def get_user_data(request):
     user = request.user
-
+    user_id = request.GET.get('id', None)
     if user.is_authenticated:
-        return Response({
-            'user_info': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email
-            }
-        })
+        if user_id is None:
+            return Response({
+                'user_info': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'firstname': user.first_name,
+                    'lastname': user.last_name,
+                }
+            })
+        else:
+            u = User.objects.get(id=user_id)
+            return Response({
+                'user_info': {
+                    'id': u.id,
+                    'username': u.username,
+                    'email': u.email,
+                    'first_name': u.first_name,
+                    'last_name': u.last_name,
+                }
+            })
 
     return Response({
         'error': 'not authenticated'

@@ -5,10 +5,10 @@ from rest_framework.views import Response
 # from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from .models import Plan, PlanInterests
 from .serializers import PlanInterestSerializer, PlanSerializer
-# Create your views here.
 
 class GetUserPlansView(viewsets.ModelViewSet):
     queryset = Plan.objects.all()
@@ -19,10 +19,18 @@ class GetUserPlansView(viewsets.ModelViewSet):
         user = request.user
         is_search = request.GET.get('is_search', 'false')
         if is_search == 'true':
+            # TODO sort out past events
+            # TODO prioritize events close to their current location
+            # TODO add more filter capabilites with search
+            # TODO filter out events that are full
             search_term = request.GET.get('search_term', '')
-            self.queryset = self.queryset.filter(name__icontains=search_term)
-            print(self.queryset)
+            self.queryset = self.queryset.filter(
+                Q(name__icontains=search_term) & 
+                ~Q(people_going=user)
+            )
+            # print(self.queryset)
         else:
+            # TODO sort out past events
             self.queryset = self.queryset.filter(people_going=user)
         return super().list(request)
 
@@ -36,7 +44,7 @@ class GetUserPlansView(viewsets.ModelViewSet):
             longitude=request.data['longitude'],
             location_name=request.data['location_name'],
             num_people=request.data['num_people'],
-            host=User.objects.get(id=request.data['host']),
+            host=request.user,
             # people_going=request.data['people_going'],
         )
         for u in User.objects.filter(id__in=request.data['people_going']):
@@ -63,7 +71,7 @@ def request_join_event(request):
 
 @api_view(['POST'])
 def leave_event(request):
-    print('leave')
+    # print('leave')
     plan_id = request.data
     print('plan id', plan_id)
     user = request.user

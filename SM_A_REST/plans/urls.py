@@ -6,6 +6,8 @@ from .views import GetUserPlansView, request_join_event, leave_event
 router = DefaultRouter()
 router.register("getuserplans", GetUserPlansView)
 
+#NERDS
+
 
 urlpatterns = [
     path('', include(router.urls)),
